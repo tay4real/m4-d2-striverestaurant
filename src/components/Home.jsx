@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import items from "../data/menu.json";
 import { Container, Row, Col, Carousel } from "react-bootstrap";
-
+import { DishComments } from "./DishComments";
 class Home extends Component {
-  render() {
-    console.log("myItems", items);
+  state = {
+    selectedDish: null,
+  };
 
+  selectNewDish = (dish) => {
+    // console.log("Dish selected", dish);
+    this.setState({ selectedDish: dish });
+  };
+
+  render() {
     return (
       <Container>
         <Row className="justify-content-center mt-3">
@@ -21,6 +28,7 @@ class Home extends Component {
                     className="d-block w-100"
                     src={item.image}
                     alt={item.name}
+                    onClick={() => this.selectNewDish(item)}
                   />
                   <Carousel.Caption>
                     <h3>{item.name}</h3>
@@ -30,6 +38,9 @@ class Home extends Component {
               ))}
             </Carousel>
           </Col>
+        </Row>
+        <Row>
+          <DishComments selectedDish={this.state.selectedDish} />
         </Row>
       </Container>
     );
